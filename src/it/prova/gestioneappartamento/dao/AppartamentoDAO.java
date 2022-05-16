@@ -60,5 +60,35 @@ public class AppartamentoDAO {
 		return result;
 	}
 
+	public Appartamento selectById(Long idAppartamentoInput) {
+
+		if (idAppartamentoInput == null || idAppartamentoInput < 1)
+			throw new RuntimeException("Impossibile cercare Appartamento : id mancante!");
+
+		Appartamento result = null;
+		try (Connection c = MyConnection.getConnection();
+				PreparedStatement ps = c.prepareStatement("select * from appartamento a where a.id=?")) {
+
+			ps.setLong(1, idAppartamentoInput);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					result = new Appartamento();
+					result.setId(rs.getLong("id"));
+					result.setQuartiere(rs.getString("quartiere"));
+					result.setMetriQuadri(rs.getInt("metriquadrati"));
+					;
+					result.setDataCostruzione(rs.getDate("datacostruzione"));
+				} else {
+					result = null;
+				}
+			} // niente catch qui
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		return result;
+	}
+
 }
 // new java.sql.Date(appartamentoInput.getDataCostruzione().getTime

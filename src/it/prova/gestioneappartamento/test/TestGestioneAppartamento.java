@@ -13,8 +13,12 @@ public class TestGestioneAppartamento {
 
 		System.out.println("in tabella appartamento ci sono: " + appartamentoDAOInstance.list().size());
 
-		testIntertAppartamento(appartamentoDAOInstance);
-		System.out.println("in tabella appartamento ci sono: " + appartamentoDAOInstance.list().size());
+		// testIntertAppartamento(appartamentoDAOInstance);
+		// System.out.println("in tabella appartamento ci sono: " +
+		// appartamentoDAOInstance.list().size());
+
+		testSelectByIdAppartamento(appartamentoDAOInstance);
+
 	}
 
 	public static void testIntertAppartamento(AppartamentoDAO appartamentoDAOInstance) {
@@ -22,18 +26,32 @@ public class TestGestioneAppartamento {
 
 		Date dataInput = null;
 		try {
-			dataInput = new SimpleDateFormat("dd/MM/yyyy").parse("23/05/2022");
+			dataInput = new SimpleDateFormat("dd/MM/yyyy").parse("05/01/2011");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		int quantiAppartamentiInseriti = appartamentoDAOInstance
-				.insert(new Appartamento("San Paolo", 86, 10000, dataInput));
+				.insert(new Appartamento("Gianicolense", 75, 24000, dataInput));
 
 		if (quantiAppartamentiInseriti < 1)
-			throw new RuntimeException("testInserimentoAppartamento: FAILLED");
+			throw new RuntimeException("testInserimentoAppartamento: FAILED");
 
 		System.out.println("......testInserimentoAppartamento fine: PASSED.......");
+	}
+
+	public static void testSelectByIdAppartamento(AppartamentoDAO appartamentoDAOInstance) {
+		System.out.println("......testSelectByIdAppartamento inizio.....");
+
+		Appartamento appartamentoCheRicerco = appartamentoDAOInstance.selectById(1L);
+
+		if (appartamentoCheRicerco == null) {
+			System.out.println("negozio non presente");
+		}
+
+		System.out.println(appartamentoCheRicerco.getQuartiere() + " ha : " + appartamentoCheRicerco.getMetriQuadri()
+				+ " mq e costo: " + appartamentoCheRicerco.getPrezzo());
+		System.out.println(".......testSelectByIdAppartamento fine: PASSED");
 	}
 }
