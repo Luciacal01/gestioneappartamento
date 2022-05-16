@@ -2,6 +2,7 @@ package it.prova.gestioneappartamento.test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,15 +13,18 @@ public class TestGestioneAppartamento {
 	public static void main(String[] args) {
 		AppartamentoDAO appartamentoDAOInstance = new AppartamentoDAO();
 
-		System.out.println("in tabella appartamento ci sono: " + appartamentoDAOInstance.list().size());
+		// System.out.println("in tabella appartamento ci sono: " +
+		// appartamentoDAOInstance.list().size());
 
-		testIntertAppartamento(appartamentoDAOInstance);
-		System.out.println("in tabella appartamento ci sono: " + appartamentoDAOInstance.list().size());
+		// testIntertAppartamento(appartamentoDAOInstance);
+		// System.out.println("in tabella appartamento ci sono: " +
+		// appartamentoDAOInstance.list().size());
 
-		testSelectByIdAppartamento(appartamentoDAOInstance);
+		// testSelectByIdAppartamento(appartamentoDAOInstance);
 
-		testDelete(appartamentoDAOInstance);
-		testUpdate(appartamentoDAOInstance);
+		// testDelete(appartamentoDAOInstance);
+		// testUpdate(appartamentoDAOInstance);
+		testFindByExample(appartamentoDAOInstance);
 
 	}
 
@@ -92,6 +96,22 @@ public class TestGestioneAppartamento {
 				+ appartamentoDAOInstance.selectById(5L).getPrezzo());
 
 		System.out.println("..............testUpdate Appartamento Passed...........");
+	}
+
+	public static void testFindByExample(AppartamentoDAO appartamentoDAOInstance) {
+		System.out.println("............testFindByExample...........");
+		Date dataInput = null;
+		try {
+			dataInput = new SimpleDateFormat("dd/MM/yyyy").parse("00/00/0000");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Appartamento ap = new Appartamento("Gianicolense", -1, -1, dataInput);
+		List<Appartamento> appartamentiCon = appartamentoDAOInstance.findByExample(ap);
+		for (Appartamento appartamentoItem : appartamentiCon) {
+			System.out.println(appartamentoItem);
+		}
 	}
 
 }
