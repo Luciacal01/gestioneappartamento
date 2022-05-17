@@ -107,7 +107,7 @@ public class TestGestioneAppartamento {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Appartamento ap = new Appartamento("Gianicolense", -1, -1, dataInput);
+		Appartamento ap = new Appartamento("Gianicolense", 97, -1, dataInput);
 		List<Appartamento> appartamentiCon = appartamentoDAOInstance.findByExample(ap);
 		for (Appartamento appartamentoItem : appartamentiCon) {
 			System.out.println(appartamentoItem);

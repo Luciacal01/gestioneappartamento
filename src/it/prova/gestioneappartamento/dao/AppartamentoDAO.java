@@ -159,22 +159,37 @@ public class AppartamentoDAO {
 		boolean dateEx = false;
 		Appartamento temp = null;
 		String query = "Select * from appartamento where ";
-
-		if (example.getQuartiere() != null && example.getQuartiere() != " ") {
+		int cont = 0;
+		if (!example.getQuartiere().equals(null) && !example.getQuartiere().equals("")) {
 			quartiereEx = true;
 			query += "quartiere=?";
+			cont++;
 		}
 		if (example.getMetriQuadri() > 0) {
 			metriQuadratiEx = true;
-			query += " AND metriquadri=?";
+			if (cont > 0) {
+				query += "AND metriquadrati=?";
+			} else {
+				query += "metriquadrati=?";
+			}
+			cont++;
 		}
 		if (example.getPrezzo() > 0) {
 			prezzoEx = true;
-			query += " AND prezo=? AND\t";
+			if (cont > 0) {
+				query += " AND prezzo=?";
+			} else {
+				query += "prezzo=?";
+			}
+
 		}
 		if (example.getDataCostruzione().after(dataSbagliata)) {
 			dateEx = true;
-			query += " AND datacostruzione=?;";
+			if (cont > 0) {
+				query += " AND datacostruzione=?;";
+			} else {
+				query += " datacostruzione=?;";
+			}
 		}
 		System.out.println(query);
 		try (Connection c = MyConnection.getConnection(); PreparedStatement ps = c.prepareStatement(query)) {
